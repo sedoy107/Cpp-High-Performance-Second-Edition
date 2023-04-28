@@ -17,4 +17,19 @@ public:
   }
 };
 
+class Bar {
+  int* ptr_{nullptr};
+  int val_{};
+public:
+  // auto set_ptr(int* p) const {
+  //   ptr_ = p; // Will not compile, as expected
+  // }
+  // auto set_val(int v) const {
+  //   val_ = v; // Will not compile, as expected
+  // }
+  auto set_ptr_val(int v) const {
+    *ptr_ = v; // Compiles despite function being const
+  }
+};
+
 #endif // experimental/propagate_const
