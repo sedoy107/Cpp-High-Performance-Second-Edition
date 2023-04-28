@@ -47,8 +47,8 @@ auto nonmutating_func(const std::vector<Team>& teams) {
     tot_age += team.leader().age();
 
   // Will not compile, set_age requires a mutable object
-  //  for(auto& team: teams)
-  //    team.leader().set_age(20);
+  // for(auto& team: teams)
+    // team.leader().set_age(20);
 }
 
 
