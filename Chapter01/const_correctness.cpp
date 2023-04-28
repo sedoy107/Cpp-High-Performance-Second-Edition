@@ -43,7 +43,7 @@ auto nonmutating_func(const std::vector<Team>& teams) {
   auto tot_age = int{0};
 
   // Compiles, both leader() and age() are declared const
-  for (const auto& team: teams)
+  for (const auto& team: teams) // const is not required here --SG
     tot_age += team.leader().age();
 
   // Will not compile, set_age requires a mutable object
