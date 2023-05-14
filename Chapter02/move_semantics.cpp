@@ -174,7 +174,8 @@ private:
 TEST(MoveSemantics, StrToLower) {
   std::cout << "tolower\n";
   auto upper = std::string{"ABC"};
-  auto lower = str_to_lower(std::move(upper));
+  auto lower = str_to_lower(std::move(upper)); // Move-construct steals the
+                                               // contents of upper
   ASSERT_TRUE(upper.empty());
   ASSERT_FALSE(lower.empty());
 }
