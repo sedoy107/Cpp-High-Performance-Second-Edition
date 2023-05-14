@@ -54,9 +54,9 @@ TEST(LambdaCapture, Initialization) {
 TEST(LambdaCapture, MutatingCapture) {
   auto counter_func = [counter = 1]() mutable { std::cout << counter++; };
 
-  counter_func(); // Output: 1
   counter_func(); // Output: 2
   counter_func(); // Output: 3
+  counter_func(); // Output: 4
 }
 
 TEST(LambdaCapture, MutatingCaptureByValueVSReference) {
