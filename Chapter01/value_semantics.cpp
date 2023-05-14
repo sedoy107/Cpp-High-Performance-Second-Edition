@@ -9,17 +9,19 @@
 // completely copied and encapsulated by the Bagel class.
 //
 
+using MySet = std::set<std::string, std::less<>>;
+
 class Bagel {
 public:
-  Bagel(std::set<std::string, std::less<>> ts) : toppings_(std::move(ts)) {}
+  Bagel(MySet ts) : toppings_(std::move(ts)) {}
 
 private:
-  std::set<std::string, std::less<>> toppings_;
+  MySet toppings_;
 };
 
 TEST(ValueSemantics, CreateBagels) {
 
-  auto t = std::set<std::string, std::less<>>{};
+  auto t = MySet{};
   t.insert("salt");
   auto a = Bagel{t};
 
