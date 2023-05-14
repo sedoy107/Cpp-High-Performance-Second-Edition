@@ -11,15 +11,15 @@
 
 class Bagel {
 public:
-  Bagel(std::set<std::string> ts) : toppings_(std::move(ts)) {}
+  Bagel(std::set<std::string, std::less<>> ts) : toppings_(std::move(ts)) {}
 
 private:
-  std::set<std::string> toppings_;
+  std::set<std::string, std::less<>> toppings_;
 };
 
 TEST(ValueSemantics, CreateBagels) {
 
-  auto t = std::set<std::string>{};
+  auto t = std::set<std::string, std::less<>>{};
   t.insert("salt");
   auto a = Bagel{t};
 
