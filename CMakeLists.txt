@@ -56,6 +56,8 @@ add_subdirectory("Chapter12")
 add_subdirectory("Chapter13")
 add_subdirectory("Chapter14")
 add_subdirectory("Chapter14/benchmarks")
+add_subdirectory("extra")
+add_subdirectory("extra/benchmarks")
 
 enable_testing()
 add_test(NAME Chapter01-A_Brief_Introduction_to_C++ COMMAND Chapter01-A_Brief_Introduction_to_C++)
