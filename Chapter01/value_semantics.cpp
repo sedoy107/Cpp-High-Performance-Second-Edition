@@ -13,6 +13,11 @@ using MySet = std::set<std::string, std::less<>>;
 
 class Bagel {
 public:
+  /* With value semantics the value being passed will be
+  created as a copy of the original value. The `std::move`
+  will move from the temporary copy. The original value
+  will not be affected.
+  */
   Bagel(MySet ts) : toppings_(std::move(ts)) {}
 
 private:
