@@ -47,6 +47,11 @@ void value_semantics_move_bagel() {
   t.insert("oregano");
 }
 
+void reference_binding_example(const std::string& a, const std::string& b) {
+  const auto& temp_cstr = a + b;
+  //auto& temp_str = a + b; // a non-const reference cannot be bound to a temporary
+}
+
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
