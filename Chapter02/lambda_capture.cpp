@@ -60,7 +60,7 @@ TEST(LambdaCapture, MutatingCapture) {
 }
 
 TEST(LambdaCapture, MutatingCaptureByValueVSReference) {
-  // Capture by value
+  // Capture by value, mutable is required because Lambda state changes
   {
     auto v = 7;
     auto lambda = [v]() mutable {
