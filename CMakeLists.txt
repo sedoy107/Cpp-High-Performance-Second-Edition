@@ -7,7 +7,7 @@ huntergate(URL "https://github.com/cpp-pm/hunter/archive/v0.23.297.tar.gz" SHA1 
 
 project(CppHighPerformanceCodeExamples)
 
-set(HUNTER_STATUS_DEBUG ON)
+set(HUNTER_STATUS_DEBUG OFF)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
 
@@ -58,6 +58,7 @@ add_subdirectory("Chapter14")
 add_subdirectory("Chapter14/benchmarks")
 add_subdirectory("extra")
 add_subdirectory("extra/benchmarks")
+add_subdirectory("mylib")
 
 enable_testing()
 add_test(NAME Chapter01-A_Brief_Introduction_to_C++ COMMAND Chapter01-A_Brief_Introduction_to_C++)
