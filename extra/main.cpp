@@ -19,21 +19,32 @@ int main(int argc, char **argv) {
 #endif
 }
 
+struct NonMovable {
+  NonMovable() = default;
+  NonMovable(const NonMovable&) = default;
+  NonMovable(NonMovable&&) = delete;
+  NonMovable& operator=(const NonMovable&) = default;
+  NonMovable& operator=(NonMovable&&) = delete;
+  private:
+    int x_ = 42;
+};
+
 using MySet = std::set<std::string, std::less<>>;
 class Bagel {
 public:
-  Bagel(MySet ts) : toppings_(std::move(ts)) {}
+  Bagel(MySet ts, NonMovable nm) : toppings_(std::move(ts)), non_movable_(std::move_if_noexcept(nm)) {}
   // Bagel(MySet& ts) : toppings_(std::move(ts)) {} // will move from original ts
 
 private:
   MySet toppings_;
+  NonMovable non_movable_;
 };
 
 void value_semantics_move_bagel() {
 
   auto t = MySet{};
   t.insert("salt");
-  auto a = Bagel{t};
+  auto a = Bagel{t, NonMovable{}};
 
   // ‘a’ is not affected
   // when adding pepper
@@ -41,7 +52,7 @@ void value_semantics_move_bagel() {
 
   // ‘a’ will have salt
   // ‘b’ will have salt & pepper
-  auto b = Bagel{t};
+  auto b = Bagel{t, NonMovable{}};
 
   // No bagel is affected
   t.insert("oregano");
