@@ -1,6 +1,8 @@
 #include <set>
 #include <string>
 #include <cassert>
+#include <iostream>
+#include <algorithm>
 
 #define USE_GTEST 0
 
@@ -83,12 +85,21 @@ void ranges_transform_example() {
   std::ranges::transform(v, std::back_inserter(squared_vec), square);
 }
 
+template <typename Container>
+auto move_n_elements_to_back(Container& c, size_t n) {
+  assert(n <= c.size());
+  auto new_begin = std::next(c.begin(), n);
+  return std::rotate(c.begin(), new_begin, c.end());
+}
 
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
 
   ranges_transform_example();
+
+  auto v = std::vector{1, 2, 3, 4, 5, 6, 7, 8};
+  move_n_elements_to_back(v, 3);
 
   return 0;
 }

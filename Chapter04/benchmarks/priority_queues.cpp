@@ -88,17 +88,33 @@ static void std_ranges_sort(benchmark::State& state) {
     hits.emplace_back(generate_random_hit(std::to_string(i)));
   }
   for (auto _ : state) {
-    benchmark::DoNotOptimize(std::ranges::sort(hits.begin(), hits.end(), [](const Hit& a, const Hit& b) {
+    benchmark::DoNotOptimize(std::ranges::sort(hits, [](const Hit& a, const Hit& b) {
       return a.rank_ > b.rank_;
     }));
   }
   benchmark::ClobberMemory(); // Ensure the sort is not optimized away
 }
 
-constexpr size_t START = 1048576;
-constexpr size_t END = 1048576 * 8;
+static void std_partial_sort(benchmark::State& state) {
+  auto n = static_cast<int>(state.range(0));
+  auto hits = std::vector<Hit>{};
+  for (auto i = 0; i <= n; ++i) {
+    hits.emplace_back(generate_random_hit(std::to_string(i)));
+  }
+  for (auto _ : state) {
+    std::partial_sort(hits.begin(), std::next(hits.begin(), n), hits.end(),
+      [](const Hit& a, const Hit& b) {
+        return a.rank_ > b.rank_;
+    });
+  }
+  benchmark::ClobberMemory(); // Ensure the sort is not optimized away
+}
+
+constexpr size_t START = 262'144;
+constexpr size_t END = START * 8;
 BENCHMARK(priority_queue_partial_search)->RangeMultiplier(2)->Range(START, END);
 BENCHMARK(std_ranges_sort)->RangeMultiplier(2)->Range(START, END);
+BENCHMARK(std_partial_sort)->RangeMultiplier(2)->Range(START, END);
 
 BENCHMARK_MAIN();
 

@@ -6,6 +6,8 @@
 
 #include <algorithm>
 #include <ranges>
+#include <vector>
+#include <random>
 
 
 TEST(Sorting, SortRanges) {
@@ -31,6 +33,21 @@ TEST(Sorting, NthElement) {
 
 TEST(Sorting, PartialSort) {
   auto v = std::vector{6, 3, 2, 7, 4, 1, 5};
+  auto it = v.begin() + v.size() / 2;
+
+  std::partial_sort(v.begin(), it, v.end());
+
+  ASSERT_TRUE(std::is_sorted(v.begin(), it));
+}
+
+TEST(Sorting, AnotherPartialSort) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(1, 1000);
+  
+  auto v = std::vector<int>(30);
+  generate(v.begin(), v.end(), [&]() { return dis(gen); });
+
   auto it = v.begin() + v.size() / 2;
 
   std::partial_sort(v.begin(), it, v.end());
