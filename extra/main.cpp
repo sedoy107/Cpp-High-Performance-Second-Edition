@@ -69,9 +69,26 @@ void string_view_example(std::string_view sv) {
   const char* cstr = sv.data(); // pointer to the string data
 }
 
+void ranges_transform_example() {
+
+  auto square = [](int x) { return x * x; };
+  auto v = std::vector{1, 2, 3, 4};
+
+  // Insert into std::set
+  auto squared_set = std::set<int>{};
+  std::ranges::transform(v, std::inserter(squared_set, squared_set.end()), square);
+
+  // Insert into std::vector
+  auto squared_vec = std::vector<int>{};
+  std::ranges::transform(v, std::back_inserter(squared_vec), square);
+}
+
+
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
+
+  ranges_transform_example();
 
   return 0;
 }
