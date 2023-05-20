@@ -6,6 +6,9 @@
 #include <memory>
 #include <benchmark/benchmark.h>
 
+#include <algorithm>
+#include <ranges>
+
 //
 // This example demonstrates how to use a priority queue for
 // partially sorting a list which only provides forward iterators.
@@ -75,6 +78,7 @@ static void priority_queue_partial_search(benchmark::State& state) {
   for (auto _ : state) {
     benchmark::DoNotOptimize(sort_hits(hits.begin(), hits.end(), 10));
   }
+  benchmark::ClobberMemory(); // Ensure the sort is not optimized away
 }
 
 static void std_ranges_sort(benchmark::State& state) {
@@ -88,10 +92,13 @@ static void std_ranges_sort(benchmark::State& state) {
       return a.rank_ > b.rank_;
     }));
   }
+  benchmark::ClobberMemory(); // Ensure the sort is not optimized away
 }
 
-BENCHMARK(priority_queue_partial_search)->RangeMultiplier(2)->Range(1048576, 1048576 * 8);
-BENCHMARK(std_ranges_sort)->RangeMultiplier(2)->Range(1048576, 1048576 * 8);
+constexpr size_t START = 1048576;
+constexpr size_t END = 1048576 * 8;
+BENCHMARK(priority_queue_partial_search)->RangeMultiplier(2)->Range(START, END);
+BENCHMARK(std_ranges_sort)->RangeMultiplier(2)->Range(START, END);
 
 BENCHMARK_MAIN();
 
