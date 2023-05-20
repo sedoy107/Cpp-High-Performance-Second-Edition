@@ -4,7 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
-#include <algorithm>
 
 #define USE_GTEST 0
 
