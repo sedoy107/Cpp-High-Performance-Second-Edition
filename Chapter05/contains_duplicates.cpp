@@ -2,9 +2,12 @@
 #include <vector>
 #include <cassert>
 #include <algorithm>
+#include <random>
+#include "scoped_timer.h"
 
 template <typename Iterator>
 auto contains_duplicates_n2(Iterator begin, Iterator end) {
+  ScopedTimer s("contains_duplicates_n2");
   for (auto it = begin; it != end; ++it)
     if (std::find(std::next(it), end, *it) != end)
       return true;
@@ -13,6 +16,7 @@ auto contains_duplicates_n2(Iterator begin, Iterator end) {
 
 template <typename Iterator>
 auto contains_duplicates_allocating(Iterator first, Iterator last) {
+  ScopedTimer s("contains_duplicates_allocating");
   // As (*begin) returns a reference, we have to get the base type using std::decay_t
   using ValueType = std::decay_t<decltype(*first)>;
   auto copy = std::vector<ValueType>(first, last);
@@ -21,7 +25,12 @@ auto contains_duplicates_allocating(Iterator first, Iterator last) {
 }
 
 TEST(ContainsDuplicates, Examples) {
-  auto vals = std::vector{1,4,2,5,3,6,4,7,5,8,6,9,0};
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(1000, 1999);
+  
+  auto vals = std::vector<int>(100000);
+  std::ranges::generate(vals, [&]() { return dis(gen); });
 
   auto a = contains_duplicates_n2(vals.begin(), vals.end());
   ASSERT_TRUE(a);
