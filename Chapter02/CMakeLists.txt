@@ -10,6 +10,8 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     find_file(MYLIB mylib.dll HINTS ${CMAKE_BINARY_DIR}/mylib/${CMAKE_BUILD_TYPE})
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	find_library(MYLIB libmylibd.dylib HINTS ${CMAKE_BINARY_DIR}/mylib)
+else()
+    # Shit
 # ETC
 endif()
 
