@@ -3,7 +3,15 @@ cmake_minimum_required(VERSION 3.12)
 # Use hunter to download and build some third party dependencies
 include("cmake/HunterGate.cmake")
 
-huntergate(URL "https://github.com/cpp-pm/hunter/archive/v0.24.16.tar.gz" SHA1 "09668C254F01AFECA1B3D3D2E4692ED5E0E39DCC")
+if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Linux")
+  huntergate(URL "https://github.com/cpp-pm/hunter/archive/v0.23.297.tar.gz" SHA1 "3319fe6a3b08090df7df98dee75134d68e2ef5a3")
+elseif (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
+  huntergate(URL "https://github.com/cpp-pm/hunter/archive/v0.24.16.tar.gz" SHA1 "09668C254F01AFECA1B3D3D2E4692ED5E0E39DCC")
+elseif (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Darwin")
+  huntergate(URL "https://github.com/cpp-pm/hunter/archive/v0.23.297.tar.gz" SHA1 "3319fe6a3b08090df7df98dee75134d68e2ef5a3")
+else()
+  # Fucked up
+endif()
 
 project(CppHighPerformanceCodeExamples)
 
