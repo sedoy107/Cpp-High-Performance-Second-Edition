@@ -63,6 +63,12 @@ void reference_binding_example(const std::string& a, const std::string& b) {
   //auto& temp_str = a + b; // a non-const reference cannot be bound to a temporary
 }
 
+void string_view_example(std::string_view sv) {
+  const std::string s{sv}; // copy
+  const std::string_view sv2 = s; // view
+  const char* cstr = sv.data(); // pointer to the string data
+}
+
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
