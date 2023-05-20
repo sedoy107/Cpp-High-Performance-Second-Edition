@@ -8,7 +8,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_library(MYLIB libmylib.so HINTS ${CMAKE_BINARY_DIR}/mylib)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     find_file(MYLIB mylib.dll HINTS ${CMAKE_BINARY_DIR}/mylib/${CMAKE_BUILD_TYPE})
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Dawrin")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	find_library(MYLIB libmylibd.dylib HINTS ${CMAKE_BINARY_DIR}/mylib)
 # ETC
 endif()
