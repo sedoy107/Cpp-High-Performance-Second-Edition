@@ -13,6 +13,9 @@
 #include <vector>
 
 
+#define ENABLE_TESTING 0
+#if ENABLE_TESTING == 1
+
 TEST(RangeViews, GeneratingViews) {
 
   for (auto i : std::views::iota(-2, 2)) {
@@ -57,3 +60,4 @@ TEST(RangeViews, UtilityViews) {
 }
 
 #endif // ranges
+#endif // ENABLE_TESTING

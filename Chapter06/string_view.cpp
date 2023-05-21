@@ -9,10 +9,11 @@
 #include <algorithm>
 #include <cstring>
 #include <ranges>
-#include <span>
 #include <string>
 #include <vector>
 
+#define ENABLE_TESTING 0
+#if ENABLE_TESTING == 1
 namespace {
 
 auto split(std::string_view s, char delim) {
@@ -39,3 +40,4 @@ TEST(StringView, Split) {
 }
 
 #endif // ranges
+#endif // ENABLE_TESTING

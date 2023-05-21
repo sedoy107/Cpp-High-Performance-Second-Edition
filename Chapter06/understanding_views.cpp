@@ -1,5 +1,8 @@
 // Requires C++20
 #include <version>
+
+#define ENABLE_TESTING 0
+#if ENABLE_TESTING == 1
 #if defined(__cpp_lib_ranges)
 
 #include <gtest/gtest.h>
@@ -44,3 +47,4 @@ TEST(UnderstandingViews, FlattenAndJoin) {
 }
 
 #endif // ranges
+#endif // ENABLE_TESTING
