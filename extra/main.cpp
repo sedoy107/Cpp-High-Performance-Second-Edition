@@ -4,6 +4,9 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <random>
+#include <ranges>
+#include <format>
 
 #define USE_GTEST 0
 
@@ -93,6 +96,27 @@ auto move_n_elements_to_back(Container& c, size_t n) {
   return std::rotate(c.begin(), new_begin, c.end());
 }
 
+auto mk_vec(size_t n) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+
+  auto v = std::vector<int>(n);
+  v.reserve(n);
+
+  std::iota(v.begin(), v.end(), 0);
+  std::ranges::shuffle(v, gen);
+
+  return v;
+}
+
+void print_container(auto&& c) {
+  std::cout << "[";
+  for (const auto& e : c) {
+    std::cout << e << ", ";
+  }
+  std::cout << "]\n";
+}
+
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
@@ -101,6 +125,20 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   auto v = std::vector{1, 2, 3, 4, 5, 6, 7, 8};
   move_n_elements_to_back(v, 3);
+
+  auto v2 = mk_vec(10);
+  print_container(
+    v2
+    | std::views::transform([](int x) { return x * x; })
+    | std::views::filter([](int x) { return x % 2 == 0; })
+    | std::views::transform([](int x) { return std::format("\"{}\"", x); })
+  );
+
+  auto csv = std::string{"10,11,12"};
+  auto digits = csv
+    | std::views::split(',')
+    | std::views::join;
+  for (auto x : digits) {std::cout << x;}
 
   return 0;
 }
