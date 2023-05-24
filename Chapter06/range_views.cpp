@@ -13,7 +13,7 @@
 #include <vector>
 
 
-#define ENABLE_TESTING 0
+#define ENABLE_TESTING 1
 #if ENABLE_TESTING == 1
 
 TEST(RangeViews, GeneratingViews) {
