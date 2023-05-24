@@ -22,6 +22,13 @@ protected:
 TEST_F(SmallSizeOptimization, StringMemory) {
    // Elaborate with different string sizes
   print_string_mem("");
+#ifdef __APPLE__
+#ifdef __arm64__
+  print_string_mem("0123456789abcde");
+  print_string_mem("0123456789abcdef");
+#endif
   print_string_mem("1234567890123456789012");
   print_string_mem("12345678901234567890123");
+#endif
+  
 }
