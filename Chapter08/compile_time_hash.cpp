@@ -36,6 +36,7 @@ private:
   size_t size_{};
   const char* strptr_{nullptr};
 };
+
 namespace std {
 template <>
 struct hash<PrehashedString> {
