@@ -1,9 +1,5 @@
 #include <gtest/gtest.h>
 
-
-// "auto" as function parameter is not supported in visual studio at the time of writing this
-#ifndef _MSC_VER
-
 auto pow_n(const auto& v, int n) {
   auto product = decltype(v){1}; // Instead of T{1}
   // or:
@@ -20,8 +16,6 @@ TEST(AbbreviatedFunctionTemplates, PowN) {
   ASSERT_EQ(27, x);
   ASSERT_EQ(typeid(int), typeid(x));
 }
-
-#endif
 
 TEST(AbbreviatedFunctionTemplates, ExplicitTemplateParameters) {
 

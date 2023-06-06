@@ -19,23 +19,11 @@ concept Point = requires(T p) {
   requires Arithmetic<decltype(p.x())>;
 };
 
-// "auto" is not supported as function paramter in visual studio at the time of writing this
-#ifndef _MSC_VER
 std::floating_point auto dist(Point auto p1, Point auto p2) {
   auto a = p1.x() - p2.x();
   auto b = p1.y() - p2.y();
   return std::sqrt(a * a + b * b);
 }
-#else
-template <Point P>
-std::floating_point auto dist(P p1, P p2) {
-  auto a = p1.x() - p2.x();
-  auto b = p1.y() - p2.y();
-  return std::sqrt(a * a + b * b);
-}
-#endif
-
-
 
 template <Arithmetic T> // T is now constrained!
 class Point2D {
