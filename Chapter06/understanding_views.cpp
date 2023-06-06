@@ -1,7 +1,7 @@
 // Requires C++20
 #include <version>
 
-#define ENABLE_TESTING 0
+#define ENABLE_TESTING 1
 #if ENABLE_TESTING == 1
 #if defined(__cpp_lib_ranges)
 

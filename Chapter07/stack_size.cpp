@@ -5,7 +5,7 @@
 
 // Since there is no base case
 auto func(std::byte* stack_bottom_addr) -> void {
-  std::byte data[1024];
+  std::byte data[1024*1024];
   std::cout << stack_bottom_addr - data << '\n';
   func(stack_bottom_addr);
 }

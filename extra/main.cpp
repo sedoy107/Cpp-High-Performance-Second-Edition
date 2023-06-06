@@ -151,11 +151,16 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     | std::views::transform([](int x) { return std::format("\"{}\"", x); })
   );
 
+
   auto csv = std::string{"10,11,12"};
   auto digits = csv
     | std::views::split(',')
     | std::views::join;
   for (auto x : digits) {std::cout << x;}
+
+  auto v3 = std::vector{4, 2, 7, 1, 2, 6, 1, 5};
+  auto first_half = v3 | std::views::take(v3.size() / 2);
+  std::ranges::sort(first_half);
 
   assert(constrained_diff(10, 4), 6);
   //print_args("4"); // won't compile
