@@ -134,6 +134,52 @@ void print_args(T x) {
   std::cout << x;
 }
 
+
+template <std::size_t N>
+struct MyAllocator
+{
+    char data[N];
+    void* p;
+    std::size_t sz;
+    MyAllocator() : p(data), sz(N) {}
+    template <typename T>
+    T* aligned_alloc(std::size_t a = alignof(T))
+    {
+        if (std::align(a, sizeof(T), p, sz))
+        {
+            T* result = reinterpret_cast<T*>(p);
+            p = (char*)p + sizeof(T);
+            sz -= sizeof(T);
+            return result;
+        }
+        return nullptr;
+    }
+};
+
+void myallocator_example() {
+  MyAllocator<64> a;
+  std::cout << "allocated a.data at " << (void*)a.data
+            << " (" << sizeof a.data << " bytes)\n";
+
+  // allocate a char
+  if (char* p = a.aligned_alloc<char>()) {
+      *p = 'a';
+      std::cout << "allocated a char at " << (void*)p << '\n';
+  }
+
+  // allocate an int
+  if (int* p = a.aligned_alloc<int>()) {
+      *p = 1;
+      std::cout << "allocated an int at " << (void*)p << '\n';
+  }
+
+  // allocate an int, aligned at 32-byte boundary
+  if (int* p = a.aligned_alloc<int>(32)) {
+      *p = 2;
+      std::cout << "allocated an int at " << (void*)p << " (32 byte alignment)\n";
+  }
+}
+
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
@@ -164,6 +210,8 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   assert(constrained_diff(10, 4), 6);
   //print_args("4"); // won't compile
+
+  myallocator_example();
 
   return 0;
 }
