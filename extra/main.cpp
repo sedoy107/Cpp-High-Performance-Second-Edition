@@ -7,6 +7,10 @@
 #include <random>
 #include <ranges>
 #include <format>
+#include <concepts>
+#include <type_traits>
+#include <numeric>
+
 
 #define USE_GTEST 0
 
@@ -117,6 +121,19 @@ void print_container(auto&& c) {
   std::cout << "]\n";
 }
 
+template <typename T>
+concept Arithmetic = std::is_arithmetic_v<T>;
+
+template<Arithmetic T>
+Arithmetic auto constrained_diff(T x1, T x2) {
+  return x1 - x2;
+}
+
+template<Arithmetic T>
+void print_args(T x) {
+  std::cout << x;
+}
+
 int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   value_semantics_move_bagel();
@@ -139,6 +156,9 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     | std::views::split(',')
     | std::views::join;
   for (auto x : digits) {std::cout << x;}
+
+  assert(constrained_diff(10, 4), 6);
+  //print_args("4"); // won't compile
 
   return 0;
 }
