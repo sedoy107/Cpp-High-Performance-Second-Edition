@@ -10,6 +10,8 @@
 #include <concepts>
 #include <type_traits>
 #include <numeric>
+#include <thread>
+#include <memory>
 
 
 #define USE_GTEST 0
@@ -189,6 +191,7 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
   auto v = std::vector{1, 2, 3, 4, 5, 6, 7, 8};
   move_n_elements_to_back(v, 3);
 
+#ifndef __clang__
   auto v2 = mk_vec(10);
   print_container(
     v2
@@ -197,18 +200,18 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     | std::views::transform([](int x) { return std::format("\"{}\"", x); })
   );
 
-
   auto csv = std::string{"10,11,12"};
   auto digits = csv
     | std::views::split(',')
     | std::views::join;
   for (auto x : digits) {std::cout << x;}
+#endif
 
   auto v3 = std::vector{4, 2, 7, 1, 2, 6, 1, 5};
   auto first_half = v3 | std::views::take(v3.size() / 2);
   std::ranges::sort(first_half);
 
-  assert(constrained_diff(10, 4), 6);
+  assert(constrained_diff(10, 4) == 6);
   //print_args("4"); // won't compile
 
   myallocator_example();
