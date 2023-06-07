@@ -216,5 +216,7 @@ int my_main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
   myallocator_example();
 
+  std::cout << "Hardware threads: " << std::thread::hardware_concurrency() << "\n";
+
   return 0;
 }
